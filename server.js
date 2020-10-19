@@ -54,7 +54,7 @@ app.get('/', getAllItems)
 app.get('/:id', getItemById)
 app.post('/', postNewItem)
 app.delete('/:id', deleteItemById)
-app.put('/items/:id', replaceItemById)
+app.put('/:id', replaceItemById)
 
 app.listen(3333, () => console.log(
   'items server listening on port 3333!',
