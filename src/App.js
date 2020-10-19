@@ -6,6 +6,7 @@ import axios from 'axios';
 import styled from 'styled-components'
 import SignUpForm from './SignUpForm'
 import LoginForm from './LoginForm'
+import { BrowserRouter as Router } from 'react-router-dom';
 
 function App() {
 
@@ -72,6 +73,7 @@ function App() {
   }, [formValues])
 
   return (
+    <Router>
     <div className="App">
 
       {/*Header/Nav*/}
@@ -104,6 +106,7 @@ function App() {
       </Route>
       
     </div>
+    </Router>
   );
 }
 
