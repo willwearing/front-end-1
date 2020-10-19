@@ -9,6 +9,22 @@ import LoginForm from './LoginForm'
 
 function App() {
 
+  const initialFormValues = {
+    name: '',
+    password: ''
+  }
+
+  const initialFormErrors = {
+    name: '',
+    password: ''
+  }
+
+
+  //Slices of state
+  const [formValues, setFormValues] = useState(formValues);
+  const [users, setUsers] = useState([]);
+  const [formErrors, setFormErrors]
+  const [disabled, setDisabled] = useState(true);
 
   return (
     <div className="App">
