@@ -8,6 +8,13 @@ import SignUpForm from './SignUpForm'
 import LoginForm from './LoginForm'
 import { BrowserRouter as Router } from 'react-router-dom';
 
+const Header = styled.header`
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: lightgray;
+`
+
 function App() {
 
   const initialFormValues = {
@@ -54,15 +61,26 @@ function App() {
   }
 
   const postNewUser = newUser => {
-
+    axios.post('https://reqres.in/api/users', newUser)
+      .then( res => {
+        setUsers([res.data, 
+          ...users]);
+        setFormValues(initialFormValues);
+      })
+      .catch( err => {
+        console.log(err);
+      })
   }
-
   const submit = () => {
     const newUser = {
       name: formValues.name.trim(),
       password: formValues.name.trim()
     }
     postNewUser(newUser);
+  }
+
+  const submitLogin = () => {
+    setFormValues(initialFormValues);
   }
 
   useEffect(() => {
@@ -77,12 +95,12 @@ function App() {
     <div className="App">
 
       {/*Header/Nav*/}
-      <header>
+      <Header>
       <h1>African Marketplace</h1>
       <Link to='/'>Home</Link>
       <Link to='/login'>Login</Link>
       <Link to='/signup'>Sign up</Link>
-      </header>
+      </Header>
 
       {/*Login Form*/}
       <Route path='/login'>
@@ -91,6 +109,7 @@ function App() {
         errors={formErrors}
         change={change}
         disabled={disabled}
+        submit={submitLogin}
         />
       </Route>
 

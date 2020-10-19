@@ -13,9 +13,16 @@ const Container = styled.div`
   flex-direction: column;
 `
 
+const Button = styled.button`
+    text-decoration: none;
+    width: 15%;
+    margin: auto;
+    margin-top: 2%;
+`
+
 export default function LoginForm(props) {
 
-    const { values, errors, change, disabled } = props;
+    const { values, errors, change, disabled, submit } = props;
 
     const onChange = evt => {
         const { name, value } = evt.target;
@@ -24,6 +31,7 @@ export default function LoginForm(props) {
 
     const onSubmit = evt => {
         evt.preventDefault();
+        submit();
     }
 
     return (
@@ -47,7 +55,7 @@ export default function LoginForm(props) {
                 onChange={onChange}
                 /></label>
 
-                <Link to='/dashboard'><button disabled={disabled}>Log In!</button></Link>
+                <Link to='/dashboard'><Button disabled={disabled}>Log In!</Button></Link>
                 </Container>
             </form>
         </div>
