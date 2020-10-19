@@ -16,26 +16,26 @@ let items = [
   },
 ]
 
-function getAllQuotes(req, res) {
+function getAllItems(req, res) {
   res.json(items)
 }
 
-function getQuoteById(req, res) {
+function getItemById(req, res) {
   res.json(items.find(item => item.id === req.params.id))
 }
 
-function postNewQuote(req, res) {
+function postNewItem(req, res) {
   const item = { id: uuid(), ...req.body }
   items.push(item)
   res.json(item)
 }
 
-function deleteQuoteById(req, res) {
+function deleteItemById(req, res) {
   items = items.filter(item => item.id !== req.params.id)
   res.json(req.params.id)
 }
 
-function replaceQuoteById(req, res) {
+function replaceItemById(req, res) {
   const { id } = req.params
   const updatedItem = { id, ...req.body }
   items = items.map(i => {
@@ -50,11 +50,11 @@ function replaceQuoteById(req, res) {
 ////////////// ENDPOINTS //////////////
 ////////////// ENDPOINTS //////////////
 ////////////// ENDPOINTS //////////////
-app.get('/items', getAllQuotes)
-app.get('/items/:id', getQuoteById)
-app.post('/items', postNewQuote)
-app.delete('/items/:id', deleteQuoteById)
-app.put('/items/:id', replaceQuoteById)
+app.get('/', getAllItems)
+app.get('/:id', getItemById)
+app.post('/', postNewItem)
+app.delete('/:id', deleteItemById)
+app.put('/items/:id', replaceItemById)
 
 app.listen(3333, () => console.log(
   'items server listening on port 3333!',
