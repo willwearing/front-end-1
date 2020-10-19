@@ -6,7 +6,7 @@ const Container = styled.div`
   border: 1px solid rgb(210, 210, 210);
   border-radius: 6px;
   box-shadow: 0px 1px 6px -2px rgb(128, 127, 127);
-  margin: 2% 15%;
+  margin: 2% 20%;
   padding: 2% 2%;
   background-color: white;
   display: flex;
@@ -15,9 +15,24 @@ const Container = styled.div`
 
 const Button = styled.button`
     text-decoration: none;
-    width: 15%;
+    width: 25%;
     margin: auto;
     margin-top: 2%;
+    padding: 2% 5%;
+`
+
+const Inputs = styled.div`
+    margin-top: 3%;
+`
+
+const Errors = styled.div`
+    color: red;
+`
+
+const EntirePage = styled.div`
+    background-color: lightgray;
+    padding-top: 1%;
+    padding-bottom: 60%;
 `
 
 export default function SignUpForm(props) {
@@ -35,32 +50,37 @@ export default function SignUpForm(props) {
     }
 
     return (
-        <div>
+        <EntirePage>
             <form onSubmit={onSubmit}>
                 <h2>Sign Up</h2>
 
                 <Container>
-                <div>{errors.name}</div>
-                <div>{errors.password}</div>
-                <label>Name
+                <Errors>{errors.name}</Errors>
+                <Errors>{errors.password}</Errors>
+
+                <Inputs>
+                <label> 
                 <input
                 type='text'
                 name='name'
                 value={values.name}
                 onChange={onChange}
-                /></label>
-
-                <label>Password
+                placeholder='Name'
+                /></label></Inputs>
+                
+                <Inputs>
+                <label> 
                 <input
                 type='text'
                 name='password'
                 value={values.password}
                 onChange={onChange}
-                /></label>
+                placeholder='Password'
+                /></label></Inputs>
 
                 <Link to='/dashboard'><Button disabled={disabled}>Sign Up!</Button></Link>
                 </Container>
             </form>
-        </div>
+        </EntirePage>
     )
 }
