@@ -7,6 +7,7 @@ import styled from 'styled-components'
 import SignUpForm from './SignUpForm'
 import LoginForm from './LoginForm'
 import { BrowserRouter as Router } from 'react-router-dom';
+import Dashboard from './Dashboard'
 
 const Header = styled.header`
   display: flex;
@@ -105,9 +106,11 @@ function App() {
       {/*Header/Nav*/}
       <Header>
       <h1>African Marketplace</h1>
-      <NavLinks><Link to='/'>Home</Link></NavLinks>
-      <NavLinks><Link to='/login'>Login</Link></NavLinks>
-      <NavLinks><Link to='/signup'>Sign up</Link></NavLinks>
+=======
+      <Link to='/'>Home</Link>
+      <Link to='/login'>Login</Link>
+      <Link to='/signup'>Sign up</Link>
+      <Link to='/items'>Items Listing</Link>
       </Header>
 
       {/*Login Form*/}
@@ -131,7 +134,11 @@ function App() {
         // disabled={disabled}
         />
       </Route>
-      
+
+      {/*Dashboard with Inputs*/}
+      <Route path='/items'>
+        <Dashboard/>
+      </Route>
     </div>
     </Router>
   );

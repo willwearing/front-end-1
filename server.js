@@ -1,61 +1,58 @@
 const express = require('express')
-const cors = require('cors')
 const uuid = require('uuid').v4
-
+const cors = require('cors')
 const app = express()
+
+const port = process.env.PORT || 3333
+
 app.use(express.json())
 app.use(cors())
 
-let items = [
+const items = [
   {
     id: uuid(),
     item_name: 'African Rug',
-    item_description: 'Beatiful hand made rug',
     item_price: 200,
-    item_location: 'facebook marketplace'
+    item_description: 'Beautiful hand made rug.',
+    item_location: 'Facebook marketplace.',
+  },
+  {
+    id: uuid(),
+    item_name: 'Moroccan Rug',
+    item_price: 350,
+    item_description: 'Stunning Moroccan rug.  Size is 5x8 feet. ',
+    item_location: 'ebay',
   },
 ]
 
-function getAllItems(req, res) {
+app.get('/:id', (req, res) => {
+  const item = items.find(it => it.id === req.params.id)
+  if (!item) {
+    res.status(404).json({ message: 'No such item!' })
+  }
+  else {
+    res.json(item)
+  }
+})
+
+app.get('/', (req, res) => {
   res.json(items)
-}
+})
 
-function getItemById(req, res) {
-  res.json(items.find(item => item.id === req.params.id))
-}
+app.post('/', (req, res) => {
+  const { item_name, item_price, item_description, item_location } = req.body
+  const requiredFields = { item_name, item_price, item_description, item_location }
 
-function postNewItem(req, res) {
-  const item = { id: uuid(), ...req.body }
-  items.push(item)
-  res.json(item)
-}
+  if (Object.values(requiredFields).some(field => (!field || !field.trim()))) {
+    res.status(400).json({ message: 'Some required fields are missing or invalid.' })
+  }
+  else {
+    const newItem = { id: uuid(), ...req.body }
+    items.push(newItem)
+    res.status(200).json(newItem)
+  }
+})
 
-function deleteItemById(req, res) {
-  items = items.filter(item => item.id !== req.params.id)
-  res.json(req.params.id)
-}
-
-function replaceItemById(req, res) {
-  const { id } = req.params
-  const updatedItem = { id, ...req.body }
-  items = items.map(i => {
-    if (i.id === id) {
-      return updatedItem
-    }
-    return i
-  })
-  res.json(updatedItem)
-}
-
-////////////// ENDPOINTS //////////////
-////////////// ENDPOINTS //////////////
-////////////// ENDPOINTS //////////////
-app.get('/', getAllItems)
-app.get('/:id', getItemById)
-app.post('/', postNewItem)
-app.delete('/:id', deleteItemById)
-app.put('/:id', replaceItemById)
-
-app.listen(3333, () => console.log(
-  'items server listening on port 3333!',
-))
+app.listen(port, () => {
+  console.log(`listening on ${port}`)
+})
