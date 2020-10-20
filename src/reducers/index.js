@@ -20,11 +20,10 @@ import {
 } from "../actions/index";
 
 const initialState = {
-  id: "",
-  name: "",
-  description: "",
-  price: "",
-  location: "",
+  products: [],
+  product: {},
+  error: "",
+  isLoading: true,
 };
 
 export const reducer = (state = initialState, action) => {
@@ -68,14 +67,19 @@ export const reducer = (state = initialState, action) => {
     case FETCH_ITEM_START:
       return {
         ...state,
+        isLoading: true,
       };
     case FETCH_ITEM_SUCCESS:
       return {
         ...state,
+        isLoading: false,
+        products: action.payload,
       };
     case FETCH_ITEM_FAILURE:
       return {
         ...state,
+        isLoading: false,
+        error: "fetch item is fecked",
       };
     case EDIT_ITEM_START:
       return {

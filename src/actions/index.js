@@ -7,7 +7,7 @@ export const SIGN_UP_FAILURE = "SIGN_UP_FAILURE";
 export const signUp = (user) => (dispatch) => {
   dispatch({ type: SIGN_UP_START });
   axios
-    .post("/signup", user)
+    .post("https://african-market-api.herokuapp.com/api/auth/register", user)
     .then((res) => {
       console.log(res);
       dispatch({ type: SIGN_UP_SUCCESS, payload: res.data });
@@ -24,7 +24,7 @@ export const LOGIN_FAILURE = "LOGIN_FAILURE";
 export const login = (credentials) => (dispatch) => {
   dispatch({ type: LOGIN_START });
   return axiosWithAuth()
-    .post("/login", credentials)
+    .post("/api/auth/login", credentials)
     .then((res) => {
       localStorage.setItem("token", res.data.token);
       dispatch({ type: LOGIN_SUCCESS, payload: res.data });
