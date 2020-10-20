@@ -13,7 +13,14 @@ const Header = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-around;
-  background-color: lightgray;
+  background-color: gray;
+`
+
+const NavLinks = styled.div`
+  text-decoration: none;
+  background-color: white;
+  padding: 1%;
+  border-radius: 10px;
 `
 
 function App() {
@@ -64,6 +71,7 @@ function App() {
   const postNewUser = newUser => {
     axios.post('https://reqres.in/api/users', newUser)
       .then( res => {
+        console.log(res);
         setUsers([res.data, 
           ...users]);
         setFormValues(initialFormValues);
@@ -75,7 +83,7 @@ function App() {
   const submit = () => {
     const newUser = {
       name: formValues.name.trim(),
-      password: formValues.name.trim()
+      password: formValues.password.trim()
     }
     postNewUser(newUser);
   }
@@ -98,6 +106,7 @@ function App() {
       {/*Header/Nav*/}
       <Header>
       <h1>African Marketplace</h1>
+=======
       <Link to='/'>Home</Link>
       <Link to='/login'>Login</Link>
       <Link to='/signup'>Sign up</Link>
@@ -118,11 +127,11 @@ function App() {
       {/*Sign Up Form*/}
       <Route path='/signup'>
         <SignUpForm 
-        values={formValues}
-        errors={formErrors}
-        change={change}
-        submit={submit}
-        disabled={disabled}
+        // values={formValues}
+        // errors={formErrors}
+        // change={change}
+        // submit={submit}
+        // disabled={disabled}
         />
       </Route>
 
