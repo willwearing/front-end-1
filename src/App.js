@@ -13,7 +13,7 @@ const Header = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: gray;
+  background-color: #FFF5EE;
   font-family: arial;
 `
 
@@ -57,22 +57,12 @@ function App() {
       {/*Login Form*/}
       <Route path='/login'>
         <LoginForm 
-        // values={formValues}
-        // errors={formErrors}
-        // change={change}
-        // disabled={disabled}
-        // submit={submitLogin}
         />
       </Route>
 
       {/*Sign Up Form*/}
       <Route path='/signup'>
         <SignUpForm 
-        // values={formValues}
-        // errors={formErrors}
-        // change={change}
-        // submit={submit}
-        // disabled={disabled}
         />
       </Route>
 
