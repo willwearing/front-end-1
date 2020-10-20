@@ -13,7 +13,7 @@ const Header = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-around;
-  background-color: gray;
+  background-color: #FFF5EE;
 `
 
 const NavLinks = styled.div`
@@ -106,11 +106,11 @@ function App() {
       {/*Header/Nav*/}
       <Header>
       <h1>African Marketplace</h1>
-=======
-      <Link to='/'>Home</Link>
-      <Link to='/login'>Login</Link>
-      <Link to='/signup'>Sign up</Link>
-      <Link to='/items'>Items Listing</Link>
+
+      <NavLinks><Link to='/'>Home</Link></NavLinks>
+      <NavLinks><Link to='/login'>Login</Link></NavLinks>
+      <NavLinks><Link to='/signup'>Sign up</Link></NavLinks>
+      <NavLinks><Link to='/items'>Items Listing</Link></NavLinks>
       </Header>
 
       {/*Login Form*/}
