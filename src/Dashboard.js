@@ -57,7 +57,7 @@ const initialFormErrors = {
 
 const initialDisabled = true;
 
-const Dashboard = ({ fetchItems, isLoading }) => {
+const Dashboard = ({ products, fetchItems, isLoading }) => {
   const [items, setItems] = useState([]);
   const [formValues, setFormValues] = useState(initialFormValues);
   const [formErrors, setFormErrors] = useState(initialFormErrors);
@@ -131,7 +131,7 @@ const Dashboard = ({ fetchItems, isLoading }) => {
       <CardContainer>
         {isLoading
           ? "Loading..."
-          : items.map((item) => {
+          : products.map((item) => {
               return <ItemCard key={item.id} details={item} />;
             })}
 

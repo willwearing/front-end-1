@@ -31,14 +31,18 @@ export const reducer = (state = initialState, action) => {
     case SIGN_UP_START:
       return {
         ...state,
+        isLoading: true,
       };
     case SIGN_UP_SUCCESS:
       return {
         ...state,
+        isLoading: false,
       };
     case SIGN_UP_FAILURE:
       return {
         ...state,
+        isLoading: false,
+        error: "error",
       };
     case LOGIN_START:
       return {

@@ -91,12 +91,13 @@ const TextInput = styled.input`
 
 const SignUpForm = (props) => {
   const initialFormValues = {
-    name: "",
+    username: "",
     password: "",
+    department: "",
   };
 
   const initialFormErrors = {
-    name: "",
+    username: "",
     password: "",
   };
 
@@ -106,76 +107,24 @@ const SignUpForm = (props) => {
   const [formErrors, setFormErrors] = useState(initialFormErrors);
   const [disabled, setDisabled] = useState(true);
 
-  //Form Schema
-  const formSchema = yup.object().shape({
-    name: yup
-      .string()
-      .required("Name is Required")
-      .min(2, "Name must be at least 2 characters"),
-    password: yup
-      .string()
-      .required("Password is required")
-      .min(6, "Password must be at least 6 characters"),
-  });
-
-  const change = (inputName, inputValue) => {
-    yup
-      .reach(formSchema, inputName)
-      .validate(inputValue)
-      .then(() => {
-        setFormErrors({
-          ...formErrors,
-          [inputName]: "",
-        });
-      })
-      .catch((err) => {
-        setFormErrors({
-          ...formErrors,
-          [inputName]: err.errors[0],
-        });
-      });
-    setFormValues({
-      ...formValues,
-      [inputName]: inputValue,
-    });
-  };
-
-  const postNewUser = (newUser) => {
-    axios
-      .post("https://reqres.in/api/users", newUser)
-      .then((res) => {
-        console.log(res);
-        setUsers([res.data, ...users]);
-        setFormValues(initialFormValues);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-  // const submit = () => {
-  //   const newUser = {
-  //     name: formValues.name.trim(),
-  //     password: formValues.password.trim(),
-  //   };
-  //   postNewUser(newUser);
-  // };
-
-  useEffect(() => {
-    formSchema.isValid(formValues).then((valid) => {
-      setDisabled(!valid);
-    });
-  }, [formValues]);
-
   const history = useHistory();
 
-  const onChange = (evt) => {
-    const { name, value } = evt.target;
-    change(name, value);
+  const onChange = (e) => {
+    setFormValues({
+      ...formValues,
+      [e.target.name]: e.target.value,
+    });
   };
 
   const onSubmit = (evt) => {
+    debugger;
     evt.preventDefault();
-    props.signUp(formValues);
+    const newUser = {
+      username: formValues.username.trim(),
+      password: formValues.password.trim(),
+      department: formValues.department.trim(),
+    };
+    props.signUp(newUser);
     history.push("/login");
   };
 
@@ -184,15 +133,15 @@ const SignUpForm = (props) => {
       <form onSubmit={onSubmit}>
         <Container>
           <h2>Sign Up</h2>
-          <Errors>{formErrors.name}</Errors>
+          <Errors>{formErrors.username}</Errors>
           <Errors>{formErrors.password}</Errors>
 
           <TextInputAround>
             <label>
               <TextInput
                 type="text"
-                name="name"
-                value={formValues.name}
+                name="username"
+                value={formValues.username}
                 onChange={onChange}
                 placeholder="Name"
               />
@@ -211,7 +160,19 @@ const SignUpForm = (props) => {
             </label>
           </TextInputAround>
 
-          <Button disabled={disabled}>Sign Up!</Button>
+          <TextInputAround>
+            <label>
+              <TextInput
+                type="text"
+                name="department"
+                value={formValues.department}
+                onChange={onChange}
+                placeholder="Seller or Buyer?"
+              />
+            </label>
+          </TextInputAround>
+
+          <Button>Sign Up!</Button>
 
           {/*<Link to='/dashboard'><Button disabled={disabled}>Sign Up!</Button></Link>*/}
         </Container>

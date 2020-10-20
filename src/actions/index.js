@@ -5,9 +5,10 @@ export const SIGN_UP_START = "SIGN_UP_START";
 export const SIGN_UP_SUCCESS = "SIGN_UP_SUCCESS";
 export const SIGN_UP_FAILURE = "SIGN_UP_FAILURE";
 export const signUp = (user) => (dispatch) => {
+  console.log(user);
   dispatch({ type: SIGN_UP_START });
   axios
-    .post("https://african-market-api.herokuapp.com/api/auth/register", user)
+    .post("https://lbs-african-marketplace.herokuapp.com/auth/register", user)
     .then((res) => {
       console.log(res);
       dispatch({ type: SIGN_UP_SUCCESS, payload: res.data });
@@ -24,8 +25,9 @@ export const LOGIN_FAILURE = "LOGIN_FAILURE";
 export const login = (credentials) => (dispatch) => {
   dispatch({ type: LOGIN_START });
   return axiosWithAuth()
-    .post("/api/auth/login", credentials)
+    .post("/auth/login", credentials)
     .then((res) => {
+      console.log(res);
       localStorage.setItem("token", res.data.token);
       dispatch({ type: LOGIN_SUCCESS, payload: res.data });
     })
@@ -52,11 +54,12 @@ export const addItem = (item) => (dispatch) => {
 export const FETCH_ITEM_START = "FETCH_ITEM_START";
 export const FETCH_ITEM_SUCCESS = "FETCH_ITEM_SUCCESS";
 export const FETCH_ITEM_FAILURE = "FETCH_ITEM_FAILURE";
-export const fetchItems = (items) => (dispatch) => {
+export const fetchItems = () => (dispatch) => {
   dispatch({ type: FETCH_ITEM_START });
   return axiosWithAuth()
-    .post("/items", items)
+    .get("/items")
     .then((res) => {
+      console.log(res);
       dispatch({ type: FETCH_ITEM_SUCCESS, payload: res.data });
     })
     .catch((err) => {

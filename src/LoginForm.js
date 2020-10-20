@@ -91,12 +91,12 @@ const EntirePage = styled.div`
 
 const LoginForm = (props) => {
   const initialFormValues = {
-    name: "",
+    username: "",
     password: "",
   };
 
   const initialFormErrors = {
-    name: "",
+    username: "",
     password: "",
   };
 
@@ -108,7 +108,7 @@ const LoginForm = (props) => {
 
   //Form Schema
   const formSchema = yup.object().shape({
-    name: yup
+    username: yup
       .string()
       .required("Name is Required")
       .min(2, "Name must be at least 2 characters"),
@@ -140,10 +140,6 @@ const LoginForm = (props) => {
     });
   };
 
-  // const submitLogin = () => {
-  //   setFormValues(initialFormValues);
-  // };
-
   useEffect(() => {
     formSchema.isValid(formValues).then((valid) => {
       setDisabled(!valid);
@@ -169,15 +165,15 @@ const LoginForm = (props) => {
       <form onSubmit={onSubmit}>
         <Container>
           <h2>Login</h2>
-          <Errors>{formErrors.name}</Errors>
+          <Errors>{formErrors.username}</Errors>
           <Errors>{formErrors.password}</Errors>
 
           <TextInputAround>
             <label>
               <TextInput
                 type="text"
-                name="name"
-                value={formValues.name}
+                name="username"
+                value={formValues.username}
                 onChange={onChange}
                 placeholder="Name"
               />
@@ -196,7 +192,7 @@ const LoginForm = (props) => {
             </label>
           </TextInputAround>
 
-          <Button disabled={disabled}>Log in!</Button>
+          <Button>Log in!</Button>
         </Container>
       </form>
     </EntirePage>
