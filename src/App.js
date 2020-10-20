@@ -124,11 +124,11 @@ function App() {
       {/*Sign Up Form*/}
       <Route path='/signup'>
         <SignUpForm 
-        values={formValues}
-        errors={formErrors}
-        change={change}
-        submit={submit}
-        disabled={disabled}
+        // values={formValues}
+        // errors={formErrors}
+        // change={change}
+        // submit={submit}
+        // disabled={disabled}
         />
       </Route>
       
