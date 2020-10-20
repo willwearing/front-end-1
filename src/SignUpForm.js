@@ -9,9 +9,10 @@ const Container = styled.div`
   border: 1px solid rgb(210, 210, 210);
   border-radius: 6px;
   box-shadow: 0px 1px 6px -2px rgb(128, 127, 127);
-  margin: 2% 20%;
-  padding: 2% 2%;
-  background-color: white;
+  margin: 3% 20%;
+  margin-top: 5%;
+  padding: 1% 2% 2% 2%;
+  background-color: gray;
   display: flex;
   flex-direction: column;
 `
@@ -36,6 +37,7 @@ const EntirePage = styled.div`
     background-color: lightgray;
     padding-top: 1%;
     padding-bottom: 60%;
+    background-image: url('https://cdn.nazmiyalantiquerugs.com/wp-content/uploads/2017/04/antique-blue-bakground-isfahan-persian-rug-51066.jpg');
 `
 
 export default function SignUpForm(props) {
@@ -127,9 +129,10 @@ export default function SignUpForm(props) {
     return (
         <EntirePage>
             <form onSubmit={onSubmit}>
-                <h2>Sign Up</h2>
+                
 
                 <Container>
+                <h2>Sign Up</h2>
                 <Errors>{formErrors.name}</Errors>
                 <Errors>{formErrors.password}</Errors>
 
