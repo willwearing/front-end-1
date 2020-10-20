@@ -5,15 +5,15 @@ const CardWrapper = styled.div`
     overflow: hidden;
     padding: 0 0 32px;
     margin: 48px auto 0;
-    width: 350px;
-    font-family: QuickSand, arial, sans-serif;
-    box-shadow: 0 0 20px rgba(0, 0, 0, .05), 0 0px 40px 
-        rgba(0, 0, 0m .08);
+    width: 325px;
+    font-family: Quicksand, arial, sans-serif;
+    box-shadow: 0 0 20px 	#3b444b, 0 0px 40px 	#3b444b;
     border-radius: 5px;
-    `
-const CardHeader = styled.header`
-    padding-top: 32px;
-    padding-bottom: 32px;
+    background-color: #FFF5EE;
+`
+
+const CardHeader = styled.div`
+    padding: 24px 32px 0 32px;
     `
 const CardHeading = styled.h3`
     font-size: 20px;
@@ -21,25 +21,10 @@ const CardHeading = styled.h3`
     text-align: left;
     `
 
-const CardPrice = styled.h3`
-    font-size: 24px;
-    font-weight: bold;
-    text-align: left;
-    `
-
 const CardBody = styled.div`
-    padding-right: 32px;
-    padding-left: 32px;
+    padding: 12px 32px;
     `
     
-const CardLabel = styled.small`
-    padding-top: 8px;
-    display: block;
-    width: 100%;
-    font-size: 14px;
-    text-align: left;
-    `
-
 const CardFieldset = styled.fieldset`
     position: relative;
     padding: 0;
@@ -58,8 +43,8 @@ const CardFieldset = styled.fieldset`
   }
 `
 const CardInput = styled.input`
-  padding: 7px 0;
-  width: 100%;
+  padding: 7px 7px 7px 7px;
+  width: 95%;
   font-family: inherit;
   font-size: 14px;
   border: 1px solid #ddd;
@@ -67,21 +52,17 @@ const CardInput = styled.input`
   transition: border-bottom-color .25s ease-in;
 
   &:focus {
-    border-color: #e5195f;
+    border-color: #777;
     outline: 0;
   }
 `
 
 const CardText = styled.p`
-    padding-top: 7px;
+    display: block;
     width: 100%;
-    font-size: 14px;
+    font-size: 12px;
     text-align: left;
     font-family: inherit;
-    border-top: 1px solid #ddd;
-    border-right: 1px solid #ddd;
-    border-bottom: 1px solid #ddd;
-    border-left: 1px solid #ddd;
     `
 
 const CardButton = styled.button`
@@ -92,6 +73,7 @@ const CardButton = styled.button`
   font-size: 14px;
   font-weight: 700;
   color: #fff;
+  margin: 12px 0;
   background-color: #e5195f;
   border: 0;
   border-radius: 35px;
@@ -104,87 +86,79 @@ const CardButton = styled.button`
     transform: translate(0, -5px);
   }
 ` 
+
 export default function ItemInputCard(props) {
-    const {values, submit, change, disabled, errors } = props;
+    const { values, errors, change, disabled, submit } = props;
 
-    const onSubmit = (evt) => {
+    const onSubmit = evt => {
         evt.preventDefault();
-        submit();
+        submit(values);
     }
-
-    const onChange = (evt) => {
+    
+    const onChange = evt => {
         const { name, value } = evt.target;
-        change(name, value);
+        change(name, value );
     }
 
     return (
-        <CardWrapper onSubmit={onSubmit}>
-            <CardHeading>
-                <CardHeader>Add an Item</CardHeader>
-            </CardHeading>
-
-            <CardBody className='errors'>
-                <CardFieldset>
-                    <CardPrice>`$ ${errors.item_price}`</CardPrice>
-                </CardFieldset>
-                <CardFieldset>
-                    <CardLabel>Description</CardLabel>
-                    <CardText>
-                        {errors.item_desription}
-                    </CardText>
-                </CardFieldset>
-                <CardFieldset>
-                    <CardLabel>Location</CardLabel>
-                    <CardText>
-                        {errors.item_location}
-                    </CardText>
-                </CardFieldset>
-            </CardBody>
-            
-
-            <CardBody className='card-group inputs'>
+        <CardWrapper>
+            <form onSubmit={onSubmit}>
+            <CardHeader>
+                <CardHeading>
+                    {values.id ? 'Edit' : 'Add New Item'}
+                </CardHeading>
+            </CardHeader>
+            <CardBody onSubmit={onSubmit}>
                 <CardFieldset>
                     <CardInput
-                        placeholder='Item name'
-                        type='text'
-                        name='item_name'
-                        onChange={onChange}
                         value={values.item_name}
-                    />
-                </CardFieldset>
-                <CardFieldset>
-                    <CardInput 
-                        placeholder='Item price'
-                        type='number'
-                        name='item_price'
                         onChange={onChange}
+                        name='item_name'
+                        type='text'
+                        placeholder='Item name' 
+                    />
+                </CardFieldset>
+                <CardText>{errors.item_name}</CardText>
+                <CardFieldset>
+                    <CardInput
                         value={values.item_price}
+                        onChange={onChange}
+                        name='item_price'
+                        type='number'
+                        min='0'
+                        placeholder='Price' 
                     />
                 </CardFieldset>
+                <CardText>{errors.item_price}</CardText>
                 <CardFieldset>
                     <CardInput
-                        placeholder='Item Description'
+                        value={values.item_description}
+                        onChange={onChange}
+                        name='item_description'
                         type='text'
-                        name='item_desription'
-                        value={values.item_desription}
+                        placeholder='Description'  
                     />
                 </CardFieldset>
+                <CardText>{errors.item_description}</CardText>
                 <CardFieldset>
                     <CardInput
-                        placeholder='Item Location'
-                        type='text'
-                        name='item_location'
                         value={values.item_location}
+                        onChange={onChange}
+                        name='item_location'
+                        type='text'
+                        placeholder='Location'
                         />
                 </CardFieldset>
+                <CardText>{errors.item_location}</CardText>
                 <CardFieldset>
                     <CardButton 
                         type='button'
                         disabled={disabled}>
-                        Register Item
+                        Register {values.id ? 'Changes' : 'Item'}
                     </CardButton>
                 </CardFieldset>
             </CardBody>
+            </form>
         </CardWrapper>
     )
     
