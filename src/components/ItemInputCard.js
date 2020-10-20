@@ -4,8 +4,8 @@ import styled from 'styled-components'
 const CardWrapper = styled.div`
     overflow: hidden;
     padding: 0 0 32px;
-    margin: 48px auto 0;
-    width: 325px;
+    margin: 48px 25px 0;
+    width: 300px;
     font-family: Quicksand, arial, sans-serif;
     box-shadow: 0 0 20px 	#3b444b, 0 0px 40px 	#3b444b;
     border-radius: 5px;
@@ -25,7 +25,7 @@ const CardBody = styled.div`
     padding: 12px 32px;
     `
     
-const CardFieldset = styled.fieldset`
+const CardFieldset = styled.label`
     position: relative;
     padding: 0;
     margin: 0;
@@ -88,27 +88,28 @@ const CardButton = styled.button`
 ` 
 
 export default function ItemInputCard(props) {
-    const { values, errors, change, disabled, submit } = props;
+    const { values, submit, change, disabled, errors } = props;
 
     const onSubmit = evt => {
         evt.preventDefault();
-        submit(values);
+        submit();
     }
     
     const onChange = evt => {
         const { name, value } = evt.target;
-        change(name, value );
+        change(name, value);
     }
 
     return (
+    <form onSubmit={onSubmit}>
         <CardWrapper>
-            <form onSubmit={onSubmit}>
+            
             <CardHeader>
                 <CardHeading>
-                    {values.id ? 'Edit' : 'Add New Item'}
+                    Add New Item
                 </CardHeading>
             </CardHeader>
-            <CardBody onSubmit={onSubmit}>
+            <CardBody>
                 <CardFieldset>
                     <CardInput
                         value={values.item_name}
@@ -152,14 +153,14 @@ export default function ItemInputCard(props) {
                 <CardText>{errors.item_location}</CardText>
                 <CardFieldset>
                     <CardButton 
-                        type='button'
                         disabled={disabled}>
-                        Register {values.id ? 'Changes' : 'Item'}
+                        Register Item
                     </CardButton>
                 </CardFieldset>
             </CardBody>
-            </form>
-        </CardWrapper>
+            
+            </CardWrapper>
+        </form>
     )
     
 }
