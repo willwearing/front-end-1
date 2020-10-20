@@ -1,6 +1,9 @@
-import React from 'react';
+import "./App.css";
+import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+import * as yup from 'yup';
+import axios from 'axios';
 import styled from 'styled-components'
-import { Link, useHistory } from 'react-router-dom'
 
 const Container = styled.div`
   border: 1px solid rgb(210, 210, 210);
@@ -37,9 +40,62 @@ const EntirePage = styled.div`
 
 export default function LoginForm(props) {
 
-    const { values, errors, change, disabled, submit } = props;
+    const initialFormValues = {
+        name: '',
+        password: ''
+      }
+    
+      const initialFormErrors = {
+        name: '',
+        password: ''
+      }
+    
+    
+      //Slices of state
+      const [formValues, setFormValues] = useState(initialFormValues);
+      const [users, setUsers] = useState([]);
+      const [formErrors, setFormErrors] = useState(initialFormErrors);
+      const [disabled, setDisabled] = useState(true);
+    
+      //Form Schema
+      const formSchema = yup.object().shape({
+        name: yup.string().required('Name is Required').min(2, 'Name must be at least 2 characters'),
+        password: yup.string().required('Password is required').min(6, 'Password must be at least 6 characters')
+      })
+    
+      const change = (inputName, inputValue) => {
+        yup.reach(formSchema, inputName).validate(inputValue)
+          .then(() => {
+            setFormErrors({
+              ...formErrors,
+              [inputName]: ''
+            })  
+          })
+          .catch(err => {
+            setFormErrors({
+              ...formErrors,
+              [inputName]: err.errors[0]
+            })
+          })
+        setFormValues({
+          ...formValues,
+          [inputName]: inputValue
+        });
+      }
 
-    const history = useHistory();
+      const submitLogin = () => {
+        setFormValues(initialFormValues);
+      }
+    
+      useEffect(() => {
+        formSchema.isValid(formValues)
+          .then((valid) => {
+            setDisabled(!valid);
+          })
+      }, [formValues])
+
+
+      const history = useHistory();
 
     const onChange = evt => {
         const { name, value } = evt.target;
@@ -48,7 +104,7 @@ export default function LoginForm(props) {
 
     const onSubmit = evt => {
         evt.preventDefault();
-        submit();
+        submitLogin();
         history.push('/dashboard');
     }
 
@@ -57,15 +113,15 @@ export default function LoginForm(props) {
             <form onSubmit={onSubmit}>
                 <h2>Login</h2>
                 <Container>
-                <Errors>{errors.name}</Errors>
-                <Errors>{errors.password}</Errors>
+                <Errors>{formErrors.name}</Errors>
+                <Errors>{formErrors.password}</Errors>
 
                 <Inputs>
                 <label> 
                 <input
                 type='text'
                 name='name'
-                value={values.name}
+                value={formValues.name}
                 onChange={onChange}
                 placeholder='Name'
                 /></label></Inputs>
@@ -75,7 +131,7 @@ export default function LoginForm(props) {
                 <input
                 type='text'
                 name='password'
-                value={values.password}
+                value={formValues.password}
                 onChange={onChange}
                 placeholder='Password'
                 /></label></Inputs>

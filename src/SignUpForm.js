@@ -1,6 +1,6 @@
 import "./App.css";
 import React, { useState, useEffect } from 'react';
-import { Route, Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import * as yup from 'yup';
 import axios from 'axios';
 import styled from 'styled-components'
