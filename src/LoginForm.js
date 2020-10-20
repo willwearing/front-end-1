@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 const Container = styled.div`
   border: 1px solid rgb(210, 210, 210);
@@ -39,6 +39,8 @@ export default function LoginForm(props) {
 
     const { values, errors, change, disabled, submit } = props;
 
+    const history = useHistory();
+
     const onChange = evt => {
         const { name, value } = evt.target;
         change(name, value);
@@ -47,6 +49,7 @@ export default function LoginForm(props) {
     const onSubmit = evt => {
         evt.preventDefault();
         submit();
+        history.push('/dashboard');
     }
 
     return (
@@ -77,7 +80,7 @@ export default function LoginForm(props) {
                 placeholder='Password'
                 /></label></Inputs>
 
-                <Link to='/dashboard'><Button disabled={disabled}>Log In!</Button></Link>
+                <Button disabled={disabled}>Log in!</Button>
                 </Container>
             </form>
         </EntirePage>
