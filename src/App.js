@@ -7,14 +7,35 @@ import styled from 'styled-components'
 import SignUpForm from './SignUpForm'
 import LoginForm from './LoginForm'
 import { BrowserRouter as Router } from 'react-router-dom';
-import Dashboard from './Dashboard'
+import Dashboard from './components/Dashboard'
 
 const Header = styled.header`
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   background-color: gray;
+  font-family: arial;
 `
+
+const Titlediv = styled.div`
+  padding: 0 40px;
+`
+
+const Nav = styled.nav`
+  display:flex;
+  justify-content: space-around;
+  align-items: center;
+  height:50px;
+  width:55%;
+  transition: 0.5s all ease-out;
+  &:hover {
+    color: gray;
+  }
+`
+
+const Title = styled.h1`
+  font-size: 24px;
+  `
 
 const NavLinks = styled.div`
   text-decoration: none;
@@ -105,12 +126,16 @@ function App() {
 
       {/*Header/Nav*/}
       <Header>
-      <h1>African Marketplace</h1>
-=======
-      <Link to='/'>Home</Link>
-      <Link to='/login'>Login</Link>
-      <Link to='/signup'>Sign up</Link>
-      <Link to='/items'>Items Listing</Link>
+
+        <Titlediv>
+            <Title>African Marketplace</Title>
+        </Titlediv>
+        <Nav>
+          <Link to='/' style={{ textDecoration: 'none', color: 'black' }}>Home</Link>
+          <Link to='/login' style={{ textDecoration: 'none', color: 'black' }}>Login</Link>
+          <Link to='/signup' style={{ textDecoration: 'none', color: 'black' }}>Sign up</Link>
+          <Link to='/items' style={{ textDecoration: 'none', color: 'black' }}>Marketplace</Link>
+        </Nav>
       </Header>
 
       {/*Login Form*/}

@@ -4,7 +4,7 @@ import ItemInputCard from './ItemInputCard'
 import axios from 'axios'
 import * as yup from 'yup'
 import styled from 'styled-components'
-import img from './marketplace.png'
+import img from '../assets/marketplace.png'
 import schema from './schema'
 
 
@@ -17,16 +17,17 @@ const DashboardContainer = styled.div`
     margin: auto;
     font-family: QuickSand, arial, sans-serif;
     background-image: url(${img});
+    background-repeat: repeat-y;
     background-size: 100%;
-    height: 100vh;
+
+    
   `
 
 const CardContainer = styled.div`
     display: flex;
     flex-flow: row wrap;
     width:100%;
-    justify-content: space-around;
-    border: 1px solid purple;
+    justify-content: space-evenly;
     margin: 24px;
     font-family: QuickSand, arial, sans-serif;
   `
@@ -41,26 +42,25 @@ const Heading = styled.h2`
     `
 
 const initialFormValues = {
-
     item_name: '',
     item_price: '',
     item_description: '',
     item_location: '',
-}
+};
 
 const initialFormErrors = {
-
     item_name: '',
     item_price: '',
     item_description: '',
     item_location: '',
-}
+};
 
+const initialItems = [];
 const initialDisabled = true;
 
 export default function Dashboard() {
 
-    const [items, setItems] = useState([])
+    const [items, setItems] = useState(initialItems)
     const [formValues, setFormValues] = useState(initialFormValues)
     const [formErrors, setFormErrors] = useState(initialFormErrors)
     const [disabled, setDisabled] = useState(initialDisabled)
@@ -71,8 +71,8 @@ export default function Dashboard() {
           .then((res) => {
             setItems(res.data);
           })
-          .catch((err) => {
-            alert(err);
+          .catch((error) => {
+            console.log(error);
           });
       };
 
@@ -83,8 +83,8 @@ export default function Dashboard() {
             setItems([res.data, ...items]);
             setFormValues(initialFormValues);
           })
-          .catch((err) => {
-            console.log(err);
+          .catch((error) => {
+            console.log(error);
           });
       };
 
@@ -93,12 +93,12 @@ export default function Dashboard() {
         .reach(schema, name)
         .validate(value)
         .then(() => {
-          setFormErrors({ ...formErrors, [name]: "",});
+          setFormErrors({ ...formErrors, [name]: "", });
         })
         .catch((err) => {
-          setFormErrors({ ...formErrors, [name]: err.errors[0],});
+          setFormErrors({ ...formErrors, [name]: err.errors[0], });
         });
-      setFormValues({ ...formValues, [name]: value,});
+      setFormValues({ ...formValues, [name]: value, });
     };
 
     const formSubmit = () => {
@@ -111,8 +111,6 @@ export default function Dashboard() {
         
         postNewItem(newItem);
       };
-
-      const resetForm = () => setFormValues(initialFormValues)
 
     
     useEffect(() => {
@@ -141,7 +139,6 @@ export default function Dashboard() {
             values={formValues}
             change={inputChange}
             submit={formSubmit}
-            reset={resetForm}
             disable={disabled}
             errors={formErrors}
             />
