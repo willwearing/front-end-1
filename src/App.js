@@ -27,22 +27,11 @@ const Nav = styled.nav`
   align-items: center;
   height:50px;
   width:55%;
-  transition: 0.5s all ease-out;
-  &:hover {
-    color: gray;
-  }
 `
 
 const Title = styled.h1`
   font-size: 24px;
   `
-
-const NavLinks = styled.div`
-  text-decoration: none;
-  background-color: white;
-  padding: 1%;
-  border-radius: 10px;
-`
 
 function App() {
 
