@@ -9,5 +9,3 @@ export const axiosWithAuth = () => {
     },
   });
 };
-
-//UPDATE LOCAL HOST TO PROPERLY USE THE BACKEND API

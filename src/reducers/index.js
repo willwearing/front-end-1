@@ -20,6 +20,7 @@ import {
 } from "../actions/index";
 
 const initialState = {
+  id: "",
   products: [],
   product: {},
   error: "",
@@ -37,6 +38,7 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: false,
+        id: action.payload.id,
       };
     case SIGN_UP_FAILURE:
       return {
@@ -59,14 +61,19 @@ export const reducer = (state = initialState, action) => {
     case ADD_ITEM_START:
       return {
         ...state,
+        isLoading: true,
       };
     case ADD_ITEM_SUCCESS:
       return {
         ...state,
+        isLoading: false,
+        products: [...state.products, action.payload],
       };
     case ADD_ITEM_FAILURE:
       return {
         ...state,
+        isLoading: false,
+        error: "Adding item failure",
       };
     case FETCH_ITEM_START:
       return {

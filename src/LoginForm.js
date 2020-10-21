@@ -156,8 +156,8 @@ const LoginForm = (props) => {
   const onSubmit = (evt) => {
     evt.preventDefault();
     // submitLogin();
-    props.login(formValues);
-    history.push("/dashboard");
+    props.login({ formValues, history });
+    // history.push("/dashboard");
   };
 
   return (

@@ -1,6 +1,6 @@
 import "./App.css";
 import React, { useState, useEffect } from "react";
-import { Route, Link } from "react-router-dom";
+import { Route, Link, Switch } from "react-router-dom";
 import * as yup from "yup";
 import axios from "axios";
 import styled from "styled-components";
@@ -122,34 +122,30 @@ function App() {
             <Link to="/signup">Sign up</Link>
           </NavLinks>
           <NavLinks>
-            <Link to="/items">Items Listing</Link>
+            <Link to="/dashboard">Items Listing</Link>
           </NavLinks>
         </Header>
 
-        {/*Login Form*/}
-        <Route path="/login">
-          <LoginForm
-            values={formValues}
-            errors={formErrors}
-            change={change}
-            disabled={disabled}
-            submit={submitLogin}
-          />
-        </Route>
+        <Switch>
+          {/*Login Form*/}
+          <Route path="/login">
+            <LoginForm
+              values={formValues}
+              errors={formErrors}
+              change={change}
+              disabled={disabled}
+              submit={submitLogin}
+            />
+          </Route>
 
-        {/*Sign Up Form*/}
-        <Route path="/signup">
-          <SignUpForm
-          // values={formValues}
-          // errors={formErrors}
-          // change={change}
-          // submit={submit}
-          // disabled={disabled}
-          />
-        </Route>
+          {/*Sign Up Form*/}
+          <Route path="/signup">
+            <SignUpForm />
+          </Route>
 
-        {/*Dashboard with Inputs*/}
-        <PrivateRoute path="/items" component={Dashboard} />
+          {/*Dashboard with Inputs*/}
+          <PrivateRoute path="/dashboard" component={Dashboard} />
+        </Switch>
       </div>
     </Router>
   );

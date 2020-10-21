@@ -117,7 +117,6 @@ const SignUpForm = (props) => {
   };
 
   const onSubmit = (evt) => {
-    debugger;
     evt.preventDefault();
     const newUser = {
       username: formValues.username.trim(),

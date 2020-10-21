@@ -9,7 +9,7 @@ import schema from "./schema";
 import { connect } from "react-redux";
 import { fetchItems } from "./actions/index";
 
-const itemsURL = "http://localhost:3333/";
+// const itemsURL = "http://localhost:3333/";
 
 const DashboardContainer = styled.div`
   display: flex;
@@ -41,86 +41,77 @@ const Heading = styled.h2`
   text-shadow: 2px 2px black;
 `;
 
-const initialFormValues = {
-  item_name: "",
-  item_price: "",
-  item_description: "",
-  item_location: "",
-};
+// const initialFormValues = {
+//   item_name: "",
+//   item_price: "",
+//   item_description: "",
+//   item_location: "",
+// };
 
-const initialFormErrors = {
-  item_name: "",
-  item_price: "",
-  item_description: "",
-  item_location: "",
-};
+// const initialFormErrors = {
+//   item_name: "",
+//   item_price: "",
+//   item_description: "",
+//   item_location: "",
+// };
 
-const initialDisabled = true;
+// const initialDisabled = true;
 
-const Dashboard = ({ products, fetchItems, isLoading }) => {
-  const [items, setItems] = useState([]);
-  const [formValues, setFormValues] = useState(initialFormValues);
-  const [formErrors, setFormErrors] = useState(initialFormErrors);
-  const [disabled, setDisabled] = useState(initialDisabled);
+const Dashboard = ({ products, fetchItems, isLoading, id }) => {
+  console.log("id of user", id);
 
-  // const getItems = () => {
+  // const [items, setItems] = useState([]);
+  // const [formValues, setFormValues] = useState(initialFormValues);
+  // const [formErrors, setFormErrors] = useState(initialFormErrors);
+  // const [disabled, setDisabled] = useState(initialDisabled);
+
+  // const postNewItem = (newItem) => {
   //   axios
-  //     .get(itemsURL)
+  //     .post(itemsURL, newItem)
   //     .then((res) => {
-  //       setItems(res.data);
+  //       setItems([res.data, ...items]);
+  //       setFormValues(initialFormValues);
   //     })
   //     .catch((err) => {
-  //       alert(err);
+  //       console.log(err);
   //     });
   // };
 
-  const postNewItem = (newItem) => {
-    axios
-      .post(itemsURL, newItem)
-      .then((res) => {
-        setItems([res.data, ...items]);
-        setFormValues(initialFormValues);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  // const inputChange = (name, value) => {
+  //   yup
+  //     .reach(schema, name)
+  //     .validate(value)
+  //     .then(() => {
+  //       setFormErrors({ ...formErrors, [name]: "" });
+  //     })
+  //     .catch((err) => {
+  //       setFormErrors({ ...formErrors, [name]: err.errors[0] });
+  //     });
+  //   setFormValues({ ...formValues, [name]: value });
+  // };
 
-  const inputChange = (name, value) => {
-    yup
-      .reach(schema, name)
-      .validate(value)
-      .then(() => {
-        setFormErrors({ ...formErrors, [name]: "" });
-      })
-      .catch((err) => {
-        setFormErrors({ ...formErrors, [name]: err.errors[0] });
-      });
-    setFormValues({ ...formValues, [name]: value });
-  };
+  // const formSubmit = () => {
+  //   const newItem = {
+  //     item_name: formValues.item_name.trim(),
+  //     item_price: formValues.item_price,
+  //     item_description: formValues.item_description.trim(),
+  //     item_location: formValues.item_location.trim(),
+  //   };
 
-  const formSubmit = () => {
-    const newItem = {
-      item_name: formValues.item_name.trim(),
-      item_price: formValues.item_price,
-      item_description: formValues.item_description.trim(),
-      item_location: formValues.item_location.trim(),
-    };
+  //   postNewItem(newItem);
+  // };
 
-    postNewItem(newItem);
-  };
-
-  const resetForm = () => setFormValues(initialFormValues);
+  // const resetForm = () => setFormValues(initialFormValues);
 
   useEffect(() => {
     fetchItems();
   }, [fetchItems]);
 
-  useEffect(() => {
-    schema.isValid(formValues).then((valid) => {
-      setDisabled(!valid);
-    });
-  }, [formValues]);
+  // useEffect(() => {
+  //   schema.isValid(formValues).then((valid) => {
+  //     setDisabled(!valid);
+  //   });
+  // }, [formValues]);
 
   return (
     <DashboardContainer>
@@ -136,12 +127,12 @@ const Dashboard = ({ products, fetchItems, isLoading }) => {
             })}
 
         <ItemInputCard
-          values={formValues}
-          change={inputChange}
-          submit={formSubmit}
-          reset={resetForm}
-          disable={disabled}
-          errors={formErrors}
+        // values={formValues}
+        // change={inputChange}
+        // submit={formSubmit}
+        // reset={resetForm}
+        // disable={disabled}
+        // errors={formErrors}
         />
       </CardContainer>
     </DashboardContainer>
@@ -150,6 +141,7 @@ const Dashboard = ({ products, fetchItems, isLoading }) => {
 
 const mapStateToProps = (state) => {
   return {
+    id: state.id,
     products: state.products,
     isLoading: state.isLoading,
   };

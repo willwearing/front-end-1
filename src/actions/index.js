@@ -1,17 +1,17 @@
 import axios from "axios";
 import { axiosWithAuth } from "../utils/axiosWithAuth";
+import { useHistory } from "react-router-dom";
 
 export const SIGN_UP_START = "SIGN_UP_START";
 export const SIGN_UP_SUCCESS = "SIGN_UP_SUCCESS";
 export const SIGN_UP_FAILURE = "SIGN_UP_FAILURE";
 export const signUp = (user) => (dispatch) => {
-  console.log(user);
   dispatch({ type: SIGN_UP_START });
   axios
     .post("https://lbs-african-marketplace.herokuapp.com/auth/register", user)
     .then((res) => {
-      console.log(res);
       dispatch({ type: SIGN_UP_SUCCESS, payload: res.data });
+      console.log("looking for id", res.data);
     })
     .catch((err) => {
       console.log("sign up form axios", err);
@@ -22,14 +22,14 @@ export const signUp = (user) => (dispatch) => {
 export const LOGIN_START = "LOGIN_START";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAILURE = "LOGIN_FAILURE";
-export const login = (credentials) => (dispatch) => {
+export const login = (action) => (dispatch) => {
   dispatch({ type: LOGIN_START });
   return axiosWithAuth()
-    .post("/auth/login", credentials)
+    .post("/auth/login", action.formValues)
     .then((res) => {
-      console.log(res);
-      localStorage.setItem("token", res.data.token);
+      window.localStorage.setItem("token", res.data.token);
       dispatch({ type: LOGIN_SUCCESS, payload: res.data });
+      action.history.push("/dashboard");
     })
     .catch((err) => {
       dispatch({ type: LOGIN_FAILURE, payload: err.response });
@@ -42,7 +42,7 @@ export const ADD_ITEM_FAILURE = "ADD_ITEM_FAILURE";
 export const addItem = (item) => (dispatch) => {
   dispatch({ type: ADD_ITEM_START });
   return axiosWithAuth()
-    .post("/add-Item", item)
+    .post("/items/additem", item)
     .then((res) => {
       dispatch({ type: ADD_ITEM_START, payload: res.data });
     })
@@ -59,7 +59,6 @@ export const fetchItems = () => (dispatch) => {
   return axiosWithAuth()
     .get("/items")
     .then((res) => {
-      console.log(res);
       dispatch({ type: FETCH_ITEM_SUCCESS, payload: res.data });
     })
     .catch((err) => {

@@ -79,6 +79,24 @@ const CardLabel = styled.small`
   margin: 0 10px;
 `;
 
+const CardButton = styled.button`
+  display: block;
+  width: 40%;
+  padding: 12px 0;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 auto;
+  margin-top: 15px;
+  background-color: #e5195f;
+  border: 0;
+  border-radius: 35px;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1); ;
+`;
+
 export default function ItemCard({ details }) {
   if (!details) {
     return (
@@ -113,6 +131,8 @@ export default function ItemCard({ details }) {
           </CardTextBox>
         </CardFieldset>
       </CardBody>
+      <CardButton>Edit</CardButton>
+      <CardButton>Delete</CardButton>
     </CardWrapper>
   );
 }
