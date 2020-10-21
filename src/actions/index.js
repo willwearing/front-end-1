@@ -1,6 +1,5 @@
 import axios from "axios";
 import { axiosWithAuth } from "../utils/axiosWithAuth";
-import { useHistory } from "react-router-dom";
 
 export const SIGN_UP_START = "SIGN_UP_START";
 export const SIGN_UP_SUCCESS = "SIGN_UP_SUCCESS";
@@ -12,7 +11,10 @@ export const signUp = (user) => (dispatch) => {
     .then((res) => {
       dispatch({ type: SIGN_UP_SUCCESS, payload: res.data });
       console.log("looking for id", res.data);
+      if (localStorage.getItem("id")) return localStorage.clear();
+      localStorage.setItem("id", res.data.id);
     })
+
     .catch((err) => {
       console.log("sign up form axios", err);
       dispatch({ type: SIGN_UP_FAILURE, payload: err.response });
@@ -41,10 +43,14 @@ export const ADD_ITEM_SUCCESS = "ADD_ITEM_SUCCESS";
 export const ADD_ITEM_FAILURE = "ADD_ITEM_FAILURE";
 export const addItem = (item) => (dispatch) => {
   dispatch({ type: ADD_ITEM_START });
-  return axiosWithAuth()
+  axiosWithAuth()
     .post("/items/additem", item)
     .then((res) => {
-      dispatch({ type: ADD_ITEM_START, payload: res.data });
+      console.log("checking", item);
+      dispatch({
+        type: ADD_ITEM_SUCCESS,
+        payload: { ...item, id: res.data[0] },
+      });
     })
     .catch((err) => {
       dispatch({ type: ADD_ITEM_FAILURE, payload: err.response });
@@ -59,6 +65,7 @@ export const fetchItems = () => (dispatch) => {
   return axiosWithAuth()
     .get("/items")
     .then((res) => {
+      console.log("checking for id", res.data);
       dispatch({ type: FETCH_ITEM_SUCCESS, payload: res.data });
     })
     .catch((err) => {
@@ -85,13 +92,17 @@ export const DELETE_ITEM_START = "DELETE_ITEM_START";
 export const DELETE_ITEM_SUCCESS = "DELETE_ITEM_SUCCESS";
 export const DELETE_ITEM_FAILURE = "DELETE_ITEM_FAILURE";
 export const deleteItem = (item) => (dispatch) => {
-  dispatch({ DELETE_ITEM_START });
-  return axiosWithAuth()
-    .post("/items", item)
+  dispatch({ type: DELETE_ITEM_START });
+  console.log("expect?", item);
+  axiosWithAuth()
+    .delete(`/items/${item.id}`, item)
     .then((res) => {
-      dispatch({ type: DELETE_ITEM_SUCCESS, payload: res.data });
+      console.log("look here", item.id);
+      console.log("this delete message is:", res.data);
+      dispatch({ type: DELETE_ITEM_SUCCESS, payload: item.id });
     })
     .catch((err) => {
+      console.log(err);
       dispatch({ type: DELETE_ITEM_FAILURE, payload: err.response });
     });
 };

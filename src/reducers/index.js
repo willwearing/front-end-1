@@ -64,6 +64,7 @@ export const reducer = (state = initialState, action) => {
         isLoading: true,
       };
     case ADD_ITEM_SUCCESS:
+      console.log("justin", action.payload);
       return {
         ...state,
         isLoading: false,
@@ -81,6 +82,7 @@ export const reducer = (state = initialState, action) => {
         isLoading: true,
       };
     case FETCH_ITEM_SUCCESS:
+      console.log("payload", action.payload);
       return {
         ...state,
         isLoading: false,
@@ -107,14 +109,17 @@ export const reducer = (state = initialState, action) => {
     case DELETE_ITEM_START:
       return {
         ...state,
+        isLoading: true,
       };
     case DELETE_ITEM_SUCCESS:
       return {
         ...state,
+        products: state.products.filter((items) => items.id !== action.payload),
       };
     case DELETE_ITEM_FAILURE:
       return {
         ...state,
+        isLoading: false,
       };
     default:
       return state;

@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import { connect } from "react-redux";
+import { deleteItem } from "./actions/index";
 
 const CardWrapper = styled.div`
   overflow: hidden;
@@ -97,17 +99,22 @@ const CardButton = styled.button`
   transition: all 0.25s cubic-bezier(0.02, 0.01, 0.47, 1); ;
 `;
 
-export default function ItemCard({ details }) {
-  if (!details) {
-    return (
-      <CardWrapper>
-        <CardHeader>
-          <CardHeading>Fetching your item&apos;s ...</CardHeading>
-        </CardHeader>
-        <CardBody></CardBody>
-      </CardWrapper>
-    );
-  }
+const ItemCard = ({ details, deleteItem }) => {
+  // if (!details) {
+  //   return (
+  //     <CardWrapper>
+  //       <CardHeader>
+  //         <CardHeading>Fetching your item&apos;s ...</CardHeading>
+  //       </CardHeader>
+  //       <CardBody></CardBody>
+  //     </CardWrapper>
+  //   );
+  // }
+
+  const deleteClick = (e) => {
+    e.preventDefault();
+    deleteItem(details);
+  };
 
   return (
     <CardWrapper>
@@ -132,7 +139,9 @@ export default function ItemCard({ details }) {
         </CardFieldset>
       </CardBody>
       <CardButton>Edit</CardButton>
-      <CardButton>Delete</CardButton>
+      <CardButton onClick={deleteClick}>Delete</CardButton>
     </CardWrapper>
   );
-}
+};
+
+export default connect(null, { deleteItem })(ItemCard);

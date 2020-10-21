@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { addItem } from "./actions/index";
-// import e from "express";
 
 const CardWrapper = styled.div`
   overflow: hidden;
@@ -90,22 +89,22 @@ const CardButton = styled.button`
   }
 `;
 
-const ItemInputCard = ({ addItem, id }) => {
+const ItemInputCard = (props) => {
   // const { values, errors, change, disabled, submit } = props;
-  console.log("this is not the droid you are looking for", id);
 
   const [formValues, setFormValues] = useState({
     name: "",
     price: "",
     description: "",
     location: "",
-    user_id: id,
   });
+
+  const idLocal = localStorage.getItem("id") || 22;
 
   const onSubmit = (evt) => {
     evt.preventDefault();
     // submit(values);
-    addItem(formValues);
+    props.addItem({ ...formValues, user_id: idLocal });
   };
 
   const onChange = (e) => {
@@ -162,7 +161,7 @@ const ItemInputCard = ({ addItem, id }) => {
           </CardFieldset>
           {/* <CardText>{errors.item_location}</CardText> */}
           <CardFieldset>
-            <CardButton type="button">Register</CardButton>
+            <CardButton type="submit">Add Item</CardButton>
           </CardFieldset>
         </CardBody>
       </form>
@@ -172,7 +171,7 @@ const ItemInputCard = ({ addItem, id }) => {
 
 const mapStateToProps = (state) => {
   return {
-    id: state.id,
+    isLoading: state.isLoading,
   };
 };
 

@@ -58,8 +58,6 @@ const Heading = styled.h2`
 // const initialDisabled = true;
 
 const Dashboard = ({ products, fetchItems, isLoading, id }) => {
-  console.log("id of user", id);
-
   // const [items, setItems] = useState([]);
   // const [formValues, setFormValues] = useState(initialFormValues);
   // const [formErrors, setFormErrors] = useState(initialFormErrors);
@@ -120,11 +118,10 @@ const Dashboard = ({ products, fetchItems, isLoading, id }) => {
       </Heading>
 
       <CardContainer>
-        {isLoading
-          ? "Loading..."
-          : products.map((item) => {
-              return <ItemCard key={item.id} details={item} />;
-            })}
+        {isLoading ? "Loading..." : null}
+        {products.map((item) => {
+          return <ItemCard key={item.id} details={item} />;
+        })}
 
         <ItemInputCard
         // values={formValues}
