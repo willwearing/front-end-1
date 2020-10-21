@@ -10,7 +10,6 @@ export const signUp = (user) => (dispatch) => {
     .post("https://lbs-african-marketplace.herokuapp.com/auth/register", user)
     .then((res) => {
       dispatch({ type: SIGN_UP_SUCCESS, payload: res.data });
-      console.log("looking for id", res.data);
       if (localStorage.getItem("id")) return localStorage.clear();
       localStorage.setItem("id", res.data.id);
     })
@@ -46,7 +45,6 @@ export const addItem = (item) => (dispatch) => {
   axiosWithAuth()
     .post("/items/additem", item)
     .then((res) => {
-      console.log("checking", item);
       dispatch({
         type: ADD_ITEM_SUCCESS,
         payload: { ...item, id: res.data[0] },
@@ -65,11 +63,25 @@ export const fetchItems = () => (dispatch) => {
   return axiosWithAuth()
     .get("/items")
     .then((res) => {
-      console.log("checking for id", res.data);
       dispatch({ type: FETCH_ITEM_SUCCESS, payload: res.data });
     })
     .catch((err) => {
       dispatch({ type: FETCH_ITEM_FAILURE, payload: err.response });
+    });
+};
+
+export const FETCH_ITEM_DETAIL_START = "FETCH_ITEM_DETAIL_START";
+export const FETCH_ITEM_DETAIL_SUCCESS = "FETCH_ITEM_DETAIL_SUCCESS";
+export const FETCH_ITEM_DETAIL_FAILURE = "FETCH_ITEM_DETAIL_FAILURE";
+export const fetchItemDetail = (id) => (dispatch) => {
+  console.log("latest", id);
+  return axiosWithAuth()
+    .get(`/items/${id}`)
+    .then((res) => {
+      dispatch({ type: FETCH_ITEM_DETAIL_SUCCESS, payload: res.data });
+    })
+    .catch((err) => {
+      dispatch({ type: FETCH_ITEM_DETAIL_FAILURE, payload: err.response });
     });
 };
 
@@ -93,12 +105,9 @@ export const DELETE_ITEM_SUCCESS = "DELETE_ITEM_SUCCESS";
 export const DELETE_ITEM_FAILURE = "DELETE_ITEM_FAILURE";
 export const deleteItem = (item) => (dispatch) => {
   dispatch({ type: DELETE_ITEM_START });
-  console.log("expect?", item);
   axiosWithAuth()
     .delete(`/items/${item.id}`, item)
     .then((res) => {
-      console.log("look here", item.id);
-      console.log("this delete message is:", res.data);
       dispatch({ type: DELETE_ITEM_SUCCESS, payload: item.id });
     })
     .catch((err) => {

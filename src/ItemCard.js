@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { deleteItem } from "./actions/index";
+import { useHistory } from "react-router-dom";
 
 const CardWrapper = styled.div`
   overflow: hidden;
@@ -100,16 +101,7 @@ const CardButton = styled.button`
 `;
 
 const ItemCard = ({ details, deleteItem }) => {
-  // if (!details) {
-  //   return (
-  //     <CardWrapper>
-  //       <CardHeader>
-  //         <CardHeading>Fetching your item&apos;s ...</CardHeading>
-  //       </CardHeader>
-  //       <CardBody></CardBody>
-  //     </CardWrapper>
-  //   );
-  // }
+  const history = useHistory();
 
   const deleteClick = (e) => {
     e.preventDefault();
@@ -138,7 +130,9 @@ const ItemCard = ({ details, deleteItem }) => {
           </CardTextBox>
         </CardFieldset>
       </CardBody>
-      <CardButton>Edit</CardButton>
+      <CardButton onClick={() => history.push(`/items/${details.id}`)}>
+        Edit
+      </CardButton>
       <CardButton onClick={deleteClick}>Delete</CardButton>
     </CardWrapper>
   );

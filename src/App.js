@@ -9,6 +9,7 @@ import LoginForm from "./LoginForm";
 import { BrowserRouter as Router } from "react-router-dom";
 import Dashboard from "./Dashboard";
 import PrivateRoute from "./utils/PrivateRoute";
+import EditItemForm from "./EditItemForm";
 
 const Header = styled.header`
   display: flex;
@@ -122,13 +123,13 @@ function App() {
             <Link to="/signup">Sign up</Link>
           </NavLinks>
           <NavLinks>
-            <Link to="/dashboard">Items Listing</Link>
+            <Link to="/dashboard">Dashboard</Link>
           </NavLinks>
         </Header>
 
         <Switch>
           {/*Login Form*/}
-          <Route path="/login">
+          <Route exact path="/">
             <LoginForm
               values={formValues}
               errors={formErrors}
@@ -139,12 +140,10 @@ function App() {
           </Route>
 
           {/*Sign Up Form*/}
-          <Route path="/signup">
-            <SignUpForm />
-          </Route>
+          <Route path="/signup" component={SignUpForm} />
 
-          {/*Dashboard with Inputs*/}
           <PrivateRoute path="/dashboard" component={Dashboard} />
+          <PrivateRoute path="/items/:id" component={EditItemForm} />
         </Switch>
       </div>
     </Router>

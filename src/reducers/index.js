@@ -11,6 +11,9 @@ import {
   FETCH_ITEM_START,
   FETCH_ITEM_SUCCESS,
   FETCH_ITEM_FAILURE,
+  FETCH_ITEM_DETAIL_START,
+  FETCH_ITEM_DETAIL_SUCCESS,
+  FETCH_ITEM_DETAIL_FAILURE,
   EDIT_ITEM_START,
   EDIT_ITEM_SUCCESS,
   EDIT_ITEM_FAILURE,
@@ -120,6 +123,23 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: false,
+      };
+    case FETCH_ITEM_DETAIL_START:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case FETCH_ITEM_DETAIL_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        product: action.payload,
+      };
+    case FETCH_ITEM_DETAIL_FAILURE:
+      return {
+        ...state,
+        isLoading: false,
+        error: "fetching item on its own ain't working - figure it out",
       };
     default:
       return state;
