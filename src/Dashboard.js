@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import ItemCard from "./ItemCard";
 import ItemInputCard from "./ItemInputCard";
-import axios from "axios";
-import * as yup from "yup";
+// import axios from "axios";
+// import * as yup from "yup";
 import styled from "styled-components";
 import img from "./marketplace.png";
-import schema from "./schema";
+// import schema from "./components/schema";
 import { connect } from "react-redux";
 import { fetchItems } from "./actions/index";
 
@@ -21,6 +21,8 @@ const DashboardContainer = styled.div`
   background-size: 100%;
   height: 100vh;
 `;
+
+//
 
 const CardContainer = styled.div`
   display: flex;
