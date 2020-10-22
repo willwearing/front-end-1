@@ -72,11 +72,10 @@ const CardText = styled.p`
   margin: 0 5px;
 `;
 
-const CardLabel = styled.small`
-  padding-top: 8px;
+const CardLabel = styled.div`
+  padding: 5px 0 0 18px;
   font-weight: bold;
   display: block;
-  width: 90%;
   font-size: 12px;
   text-align: left;
   margin: 0 10px;
