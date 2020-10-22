@@ -129,7 +129,7 @@ function App() {
 
         <Switch>
           {/*Login Form*/}
-          <Route exact path="/">
+          <Route exact path="/login">
             <LoginForm
               values={formValues}
               errors={formErrors}
