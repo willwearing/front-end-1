@@ -2,7 +2,7 @@ import "./App.css";
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import * as yup from "yup";
-import axios from "axios";
+// import axios from "axios";
 import styled from "styled-components";
 import { connect } from "react-redux";
 import { login } from "./actions/index";
