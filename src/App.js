@@ -114,7 +114,7 @@ function App() {
           <h1>African Marketplace</h1>
 
           <NavLinks>
-            <Link to="/">Home</Link>
+            <Link to="https://landing-marketing.vercel.app/">Home</Link>
           </NavLinks>
           <NavLinks>
             <Link to="/login">Login</Link>
