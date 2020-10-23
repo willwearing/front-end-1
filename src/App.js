@@ -107,15 +107,14 @@ function App() {
   }, [formValues]);
 
   return (
-    
     <Router>
       <div className="App">
         {/*Header/Nav*/}
         <Header>
           <h1>African Marketplace</h1>
 
-           <NavLinks className="App">
-            <Link to="https://landing-marketing.vercel.app/">Home</Link>
+          <NavLinks className="App">
+            <a href="https://landing-marketing.vercel.app/">Home</a>
           </NavLinks>
 
           <NavLinks>
