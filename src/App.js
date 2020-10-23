@@ -108,16 +108,15 @@ function App() {
 
   return (
     
-           <NavLinks className="App">
-            <Link to="https://landing-marketing.vercel.app/">Home</Link>
-          </NavLinks>
-    
     <Router>
       <div className="App">
         {/*Header/Nav*/}
         <Header>
           <h1>African Marketplace</h1>
 
+           <NavLinks className="App">
+            <Link to="https://landing-marketing.vercel.app/">Home</Link>
+          </NavLinks>
 
           <NavLinks>
             <Link to="/login">Login</Link>
